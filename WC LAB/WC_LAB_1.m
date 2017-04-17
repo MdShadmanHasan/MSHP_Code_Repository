@@ -22,11 +22,24 @@ PSKModulatedSymbol = pskmod(ModulationInput, M);
 %for snr = 1:3:25
 %SignalThroughTheChannel = awgn(PSKModulatedSymbol, snr, 'measured');
 %end
-
-SignalThroughTheChannel = awgn(PSKModulatedSymbol, 25, 'measured');
+snr = 3;
+SignalThroughTheChannel = awgn(PSKModulatedSymbol, snr, 'measured');
 
 DemodulatedSignal = pskdemod(SignalThroughTheChannel, M);
-SymbolToBitMappingOfDemodulatedSignal = de2bi(DemodulatedSignal);
-DemodPaddedData = reshape(SymbolToBitMappingOfDemodulatedSignal, bps, []);
 
-%PaddingRemovedData = 
+SymbolToBitMappingOfDemodulatedSignal = de2bi(DemodulatedSignal);
+
+totnoOutputBits = numel(SymbolToBitMappingOfDemodulatedSignal);
+
+DemodDataWithPadding = reshape(SymbolToBitMappingOfDemodulatedSignal, bps, []);
+
+PaddingRemovedData = DemodDataWithPadding(1:totnobits);
+
+[number, ratio] = biterr(InputReshapeBit, PaddingRemovedData);
+
+BER = ratio;
+%SNR = [SNR snr];
+
+%semilogy(snr, BER)
+
+%%OutputText = num2str(PaddingRemovedData); %hakao
