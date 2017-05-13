@@ -8,7 +8,9 @@ SELECT * FROM titleauthor
 CREATE PROC sp_showTitleAndAuthor
 AS
 BEGIN
-SELECT "Authors Last Name" = au_lname FROM authors WHERE au_id IN (SELECT au_id FROM titleauthor where title_id = 'BU1032')
+/*SELECT "Authors Last Name" = au_lname FROM authors WHERE au_id IN (SELECT au_id FROM titleauthor where title_id = 'BU1032')
+*/
+SELECT title, au_fname+ ' ' +au_lname AS full_name FROM titles JOIN titleauthor ON titles.title_id=titleauthor.title_id JOIN authors ON authors.au_id=titleauthor.au_id
 END
 
 EXEC sp_showTitleAndAuthor
