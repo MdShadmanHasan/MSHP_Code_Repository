@@ -62,3 +62,53 @@ SELECT * FROM titles WHERE title_id = @titleid
 END
 
 EXEC show_updatePrice 'BU7832'
+
+/* Task 1 */
+
+SELECT * FROM items
+SELECT * FROM CustomerAndSuppliers
+SELECT * FROM Transactions
+
+CREATE PROC print_item_details
+AS
+BEGIN
+SELECT item_category AS Category, "Total Number Of Items" = SUM(item_qoh), "Average Price" = AVG(item_price) FROM items GROUP BY item_category
+END
+
+EXEC print_item_details
+
+/* Task 2 */
+
+SELECT * FROM items
+
+CREATE PROC cheaper_prices @category_name CHAR(10), @price_value FLOAT(12)
+AS
+BEGIN
+SELECT * FROM items WHERE item_category = @category_name AND item_price < @price_value
+END
+
+EXEC cheaper_prices 'Books' , 200
+
+
+/* Task 3 */
+
+CREATE PROC
+
+
+/* TASK 4 By Sajid Sir */
+
+SELECT * FROM titles
+
+CREATE PROC avg_royalty_per_type
+AS
+BEGIN
+SELECT type, "Average Royalty" = AVG(royalty) FROM titles GROUP BY type
+END
+
+ALTER PROC avg_royalty_per_type @royalty int
+AS
+BEGIN
+SELECT type, "Average Royalty" = AVG(royalty) FROM titles GROUP BY type HAVING AVG(royalty) > @royalty
+END
+
+EXEC avg_royalty_per_type 9
