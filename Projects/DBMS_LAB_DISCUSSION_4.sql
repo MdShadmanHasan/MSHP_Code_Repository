@@ -47,3 +47,5 @@ INSERT transactions(tran_id,item_id,cust_id,tran_type,tran_quantity,tran_date)VA
 ('T000000001','P00009','C00001','S',40,DEFAULT)
 
 SELECT * FROM transactions
+SELECT * FROM CustomerAndSuppliers
+

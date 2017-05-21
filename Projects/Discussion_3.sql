@@ -8,9 +8,7 @@ SELECT * FROM titleauthor
 CREATE PROC sp_showTitleAndAuthor
 AS
 BEGIN
-/*SELECT "Authors Last Name" = au_lname FROM authors WHERE au_id IN (SELECT au_id FROM titleauthor where title_id = 'BU1032')
-*/
-SELECT title, au_fname+ ' ' +au_lname AS full_name FROM titles JOIN titleauthor ON titles.title_id=titleauthor.title_id JOIN authors ON authors.au_id=titleauthor.au_id
+SELECT "Authors Last Name" = au_lname FROM authors WHERE au_id IN (SELECT au_id FROM titleauthor where title_id = 'BU1032')
 END
 
 EXEC sp_showTitleAndAuthor
@@ -105,6 +103,8 @@ BEGIN
 SELECT type, "Average Royalty" = AVG(royalty) FROM titles GROUP BY type
 END
 
+EXEC avg_royalty_per_type
+
 ALTER PROC avg_royalty_per_type @royalty int
 AS
 BEGIN
@@ -112,3 +112,11 @@ SELECT type, "Average Royalty" = AVG(royalty) FROM titles GROUP BY type HAVING A
 END
 
 EXEC avg_royalty_per_type 9
+
+CREATE PROC proc1
+AS
+BEGIN
+SELECT royaltyper FROM titleauthor WHERE royaltyper > 50
+END
+
+EXEC proc1

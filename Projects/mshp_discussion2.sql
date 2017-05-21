@@ -16,7 +16,7 @@ SELECT * FROM CustomerAndSuppliers
 
 
 INSERT CustomerAndSuppliers (cust_id, cust_fname, cust_lname, cust_address, cust_telno, cust_city, sales_amnt, proc_amnt) VALUES
-('C00005', 'Anzar', 'JutaChor', 'NaoganBolodGachi', '014-20420420', DEFAULT, 0, 0)
+('C00006', 'Omar', 'JutaChor', 'NaoganBolodGachi', '014-20420420', DEFAULT, 0, 0)
 
 UPDATE CustomerAndSuppliers
 SET sales_amnt = 1000, proc_amnt = 5000, cust_address = 'Naogaon', cust_fname = 'Shadman'
