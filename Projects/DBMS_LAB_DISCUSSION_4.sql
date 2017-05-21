@@ -44,8 +44,20 @@ BEGIN
 END
 
 INSERT transactions(tran_id,item_id,cust_id,tran_type,tran_quantity,tran_date)VALUES
-('T000000001','P00009','C00001','S',40,DEFAULT)
+('T000000005','P00008','C00001','O',15,DEFAULT)
 
 SELECT * FROM transactions
 SELECT * FROM CustomerAndSuppliers
+
+CREATE TRIGGER trg_AutoUpdateCustomerAndSuppliers ON transactions FOR INSERT
+AS
+BEGIN
+		DECLARE @item_id char(6),@cust_id char(6),@tran_amount int,@tran_type char(1),@price money
+select @item_id=item_id,@cust_id=cust_id,@tran_amount=tran_quantity,@tran_type=tran_type from INSERTED
+select @price=item_price from ITEM where item_id=@item_id
+	if (@tran_type='S')
+		UPDATE CustomerAndSuppliers set sales_amnt=sales_amnt+@price*@tran_amount where cust_id=@cust_id
+	else
+		UPDATE CustomerAndSuppliers set proc_amnt=proc_amnt+@price*@tran_amount where cust_id=@cust_id
+END
 
